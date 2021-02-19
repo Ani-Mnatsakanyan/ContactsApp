@@ -15,6 +15,6 @@ namespace ContactsAppUI
         public Form1()
         {
             InitializeComponent();
-        }
+        } ///типо комментари
     }
 }
