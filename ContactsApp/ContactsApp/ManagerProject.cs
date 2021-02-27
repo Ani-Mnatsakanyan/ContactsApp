@@ -13,11 +13,11 @@ namespace ContactsApp
         /// <summary>
         /// Метод для сохранения информации
         /// </summary>
-        ///   /// <param name="file"></param>
-        public static void SaveToFile(Project contacts, string json) 
+        ///   /// <param name="filename"></param>
+        public static void SaveToFile(Project contacts, string falename) 
         {
             JsonSerializer serializer = new JsonSerializer();
-            using (StreamWriter sw = new StreamWriter(json)) //
+            using (StreamWriter sw = new StreamWriter(falename)) 
             using (JsonWriter writer = new JsonTextWriter(sw))
             {
                 //Вызываем сериализацию и передаем объект, который хотим сериализовать
@@ -28,12 +28,12 @@ namespace ContactsApp
         /// <summary>
         /// Метод для загрузки информации по контактам
         /// </summary>
-        public static Project Load(string json)
+        public static Project Load(string falename)
         {
             Project contacts = new Project();
             JsonSerializer serializer = new JsonSerializer();
 
-            using (StreamReader sr = new StreamReader(json))
+            using (StreamReader sr = new StreamReader(falename))
             using (JsonReader reader = new JsonTextReader(sr))
             {
                 contacts = (Project)serializer.Deserialize<Project>(reader);

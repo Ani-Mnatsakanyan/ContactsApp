@@ -16,7 +16,7 @@ namespace ContactsAppUI
         public Form1()
         {
             InitializeComponent();
-            var project = new Project();
+          //  var project = new Project();
         } 
     }
 }

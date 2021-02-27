@@ -15,7 +15,7 @@ namespace ContactsApp
             try
             {
                 //должен вывести ошибку, после исправить добавив еще одну 9
-              TelephoneNumber nun =  new TelephoneNumber(number: 7999999999); 
+              TelephoneNumber nun =  new TelephoneNumber(number: 79999999999); 
             }
             catch (Exception e)
             {
@@ -23,7 +23,7 @@ namespace ContactsApp
                 throw;
             }
             Project data = new Project();
-            ManagerProject.SaveToFile( contacts: data, json: "json");
+            ManagerProject.SaveToFile( contacts: data, falename: "savefile");
             TelephoneContact contact = new TelephoneContact(Name: "ani", surname: "mnatsakanyan",
                 email: "Mnatsakanyan300800@mail.ru", idVK: "iamani2000", Convert.ToDateTime("30.08.2000"), 79999999999);
             Console.WriteLine(value: contact.Name + " " + contact.Surname + " " 
