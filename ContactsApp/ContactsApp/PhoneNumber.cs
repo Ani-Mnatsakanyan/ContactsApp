@@ -1,21 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ContactsApp
 {
     /// <summary>
     /// Класс хранящий информацию о номере телефона
     /// </summary>
-    public class TelephoneNumber
+    public class PhoneNumber
     {
+        /// <summary>
+        /// Номер телефона
+        /// </summary>
         private static long _number;
 
+        /// <summary>
+        /// Задает номер телефона
+        /// Тефонный номер должен быть 11 цифр и начинаться с 7
+        /// </summary>
+        /// <exception cref="ArgumentException"></exception>
         public static  long Number
         {
-            get { return _number; }
+            get
+            {
+                return _number;
+            }
             set
             {
                 if ((value >= 70000000000 && value <= 79999999999))
@@ -32,14 +39,15 @@ namespace ContactsApp
         /// <summary>
         /// Конструктор, принимающий на вход номер
         /// </summary>
-        public TelephoneNumber(long number)
+        /// <param name="number">номер телефона</param> 
+        public PhoneNumber(long number)
         {
-            TelephoneNumber.Number = number;
+            PhoneNumber.Number = number;
         }
 
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
-        public TelephoneNumber() { }
+        public PhoneNumber() { }
     }
 }
