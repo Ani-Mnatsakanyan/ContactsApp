@@ -26,14 +26,14 @@ namespace ContactsAppUI
                throw;
            }
            Project data = new Project();
-           ProjectManager.SaveToFile(project: data, filename: "savefile");
+           ProjectManager.SaveToFile(project: data, filename: "filename");
            Contact contact = new Contact(name: "ani", surname: "mnatsakanyan",
-               email: "Mnatsakanyan300800@mail.ru", idVK: "iamani2000", Convert.ToDateTime("30.08.2000"), 79999999999);
-           Console.WriteLine(value: contact.Name + " " + contact.Surname + " "
-                                    + PhoneNumber.Number + " " + contact.Email + " "
+               email: "Mnatsakanyan300800@mail.ru", idVK: "iamani2000",
+               Convert.ToDateTime("30.08.2000"), 79999999999);
+           Console.WriteLine(value: contact.Name + " " + contact.Surname + " " 
+                                    + contact.Number.Number + " " + contact.Email + " "
                                     + contact.IdVK + " " + contact.BirthDate);
            Console.Read();
         }
     }
 }
-

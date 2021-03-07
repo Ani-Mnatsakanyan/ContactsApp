@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace ContactsApp
 {
@@ -44,19 +45,9 @@ namespace ContactsApp
             }
             set
             {
-                if (value.Length > 50)
-                {
-                    throw new ArgumentException("Ошибка. Фамилия не должна содержать более 50 символов");
-                }
-                else if (value == string.Empty || value == null)
-                {
-                    throw new ArgumentException("Ошибка. Пустая строка");
-                }
-                else
-                {
-                    value = value.Substring(0, 1).ToUpper() + value.Remove(0, 1);
-                    _surname = value;
-                }
+                ConditionTest(value);
+                value = ToCorrectRegister(value);
+                _surname = value;
             }
         }
 
@@ -71,26 +62,16 @@ namespace ContactsApp
             }
             set
             {
-                if (value.Length > 50)
-                {
-                    throw new ArgumentException("Ошибка. Имя не должно содержать более 50 символов");
-                }
-                else if (value == null || value == string.Empty)
-                {
-                    throw new ArgumentException("Ошибка. Пустая строка");
-                }
-                else
-                {
-                    value = value.Substring(0, 1).ToUpper() + value.Remove(0, 1);
-                    _name = value;
-                }
+                ConditionTest(value);
+                value = ToCorrectRegister(value);
+                _name = value;
             }
         }
 
         /// <summary>
         /// Свойство номера телефона
         /// </summary>
-        public PhoneNumber Number { get; set; }
+        public PhoneNumber Number { get; set; } = new PhoneNumber();
 
         /// <summary>
         /// Свойства даты рождения
@@ -123,10 +104,7 @@ namespace ContactsApp
             }
             set
             {
-                if (value.Length > 50 && value != null)
-                {
-                    throw new ArgumentException("Ошибка. Почта не должна содержать более 50 символов");
-                }
+                ConditionTest(value);
                 _email = value;
             }
         }
@@ -141,13 +119,48 @@ namespace ContactsApp
                 return _idVK;
             }
             set
-            {
+            { 
                 if (value.Length > 15 && value != null)
                 {
                     throw new ArgumentException("Ошибка. id в VK не должен быть более 15 символов");
                 }
+                ConditionTest(value);
                 _idVK = value;
             }
+        }
+
+        /// <summary>
+        /// Метод для проверки значений. Строка не должна быть пустой или превышать 50 символов.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception> 
+        bool ConditionTest(string str)
+        {
+            bool condition = false;
+            if (str == null || str == String.Empty)
+            {
+                throw new ArgumentException("Ошибка. Пустая строка");
+            }
+            if (str.Length > 50)
+            {
+                throw new ArgumentException("Ошибка. Значение не должно превышать 50 символов");
+            }
+            else
+            {
+                condition = true;
+            }
+            return condition;
+        }
+
+        /// <summary>
+        /// Метод, преобразующий к верхнему регистру первый символ.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        string ToCorrectRegister(string value)
+        {
+            return value.Substring(0, 1).ToUpper() + value.Remove(0, 1);
         }
 
         /// <summary>
@@ -164,6 +177,7 @@ namespace ContactsApp
         /// <param name="email"Электроонная почта></param>
         /// <param name="number"Телефнный номер></param>
         /// <param name="idVK"ID Вконтакте></param>
+        [JsonConstructor]
         public Contact(string name, string surname, string email, string idVK, 
             DateTime birthDate, long number)
         {
@@ -172,7 +186,7 @@ namespace ContactsApp
             this.IdVK = idVK;
             this.Name = name;
             this.Surname = surname;
-            PhoneNumber.Number = number;
+            this.Number = new PhoneNumber(number);
         }
 
         /// <summary>
@@ -182,7 +196,7 @@ namespace ContactsApp
         public object Clone()
         {
             return new Contact(this.Name, this.Surname, this.Email, this.IdVK,
-                this.BirthDate, PhoneNumber.Number);
+                this.BirthDate, this.Number.Number);
         }
     }
 }

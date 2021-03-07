@@ -7,12 +7,12 @@ namespace ContactsApp
     /// <summary>
     /// Класс сериализации
     /// </summary>
-    public class ProjectManager
+    public static class ProjectManager
     {
         /// <summary>
         /// переменная хранящая путь к сохранению файла сериализации
         /// </summary>
-        public string DefaultFilename
+        public static string DefaultFilename
         {
             get
             {
@@ -28,14 +28,20 @@ namespace ContactsApp
         /// </summary>
         /// <param name="project"></param>
         /// <param name="filename"></param>
-        public static void SaveToFile(Project project, string filename) 
+        public static void SaveToFile(Project project, string filename)
         {
-            JsonSerializer serializer = new JsonSerializer();
-            using (StreamWriter sw = new StreamWriter(filename)) 
-            using (JsonWriter writer = new JsonTextWriter(sw))
+            var serializer = new JsonSerializer()
             {
-                //Вызываем сериализацию и передаем объект, который хотим сериализовать
-                serializer.Serialize(writer, project);
+                Formatting = Formatting.Indented,
+                TypeNameHandling = TypeNameHandling.All
+            };
+            using (var sw = new StreamWriter(filename))
+            {
+                using (var writer = new JsonTextWriter(sw))
+                {
+                    //Вызываем сериализацию и передаем объект, который хотим сериализовать
+                    serializer.Serialize(writer, project);
+                }
             }
         }
 
@@ -43,7 +49,7 @@ namespace ContactsApp
         /// Метод для загрузки информации по контактам
         /// </summary>
         /// <returns></returns>
-        public static Project Load(string filename)
+        public static Project LoadFromFile(string filename)
         {
             if (!File.Exists(filename))
             {
@@ -51,18 +57,24 @@ namespace ContactsApp
             }
 
             var project = new Project();
-            var serializer = new JsonSerializer();
+            var serializer = new JsonSerializer()
+            {
+                Formatting = Formatting.Indented,
+                TypeNameHandling = TypeNameHandling.All
+            };
 
             using (var sr = new StreamReader(filename))
-            using (var reader = new JsonTextReader(sr))
             {
-                project = (Project)serializer.Deserialize<Project>(reader);
-                if (project == null)
+                using (var reader = new JsonTextReader(sr))
                 {
-                    return new Project();
+                    project = (Project) serializer.Deserialize<Project>(reader);
+                    if (project == null)
+                    {
+                        return new Project();
+                    }
                 }
+                return project;
             }
-            return project;
         }
     }
 }

@@ -10,14 +10,14 @@ namespace ContactsApp
         /// <summary>
         /// Номер телефона
         /// </summary>
-        private static long _number;
+        private long _number;
 
         /// <summary>
         /// Задает номер телефона
         /// Тефонный номер должен быть 11 цифр и начинаться с 7
         /// </summary>
         /// <exception cref="ArgumentException"></exception>
-        public static  long Number
+        public long Number
         {
             get
             {
@@ -31,7 +31,8 @@ namespace ContactsApp
                 }
                 else
                 {
-                    throw new ArgumentException("Ошибка. Номер должен содержать 11 цифр, первая цифра должна быть 7");
+                    throw new ArgumentException(
+                        "Ошибка. Номер должен содержать 11 цифр, первая цифра должна быть 7");
                 }
             }
         }
@@ -41,8 +42,8 @@ namespace ContactsApp
         /// </summary>
         /// <param name="number">номер телефона</param> 
         public PhoneNumber(long number)
-        {
-            PhoneNumber.Number = number;
+        { 
+            this.Number = number;
         }
 
         /// <summary>
