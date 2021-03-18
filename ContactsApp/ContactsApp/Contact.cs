@@ -45,7 +45,7 @@ namespace ContactsApp
             }
             set
             {
-                ConditionTest(value);
+                ValidateTitleLength(value);
                 value = ToCorrectRegister(value);
                 _surname = value;
             }
@@ -62,7 +62,7 @@ namespace ContactsApp
             }
             set
             {
-                ConditionTest(value);
+                ValidateTitleLength(value);
                 value = ToCorrectRegister(value);
                 _name = value;
             }
@@ -104,7 +104,7 @@ namespace ContactsApp
             }
             set
             {
-                ConditionTest(value);
+                ValidateTitleLength(value);
                 _email = value;
             }
         }
@@ -124,7 +124,7 @@ namespace ContactsApp
                 {
                     throw new ArgumentException("Ошибка. id в VK не должен быть более 15 символов");
                 }
-                ConditionTest(value);
+                ValidateTitleLength(value);
                 _idVK = value;
             }
         }
@@ -135,9 +135,9 @@ namespace ContactsApp
         /// <param name="str"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception> 
-        bool ConditionTest(string str)
+        void ValidateTitleLength(string str)
         {
-            bool condition = false;
+           // var condition = 0;
             if (str == null || str == String.Empty)
             {
                 throw new ArgumentException("Ошибка. Пустая строка");
@@ -146,11 +146,6 @@ namespace ContactsApp
             {
                 throw new ArgumentException("Ошибка. Значение не должно превышать 50 символов");
             }
-            else
-            {
-                condition = true;
-            }
-            return condition;
         }
 
         /// <summary>
@@ -171,12 +166,12 @@ namespace ContactsApp
         /// <summary>
         /// конструктор со всеми полями класса
         /// </summary>
-        /// <param name="surname"Фамилия></param>
-        /// <param name="name"Имя></param>
-        /// <param name="birthDate"День Рождения></param>
-        /// <param name="email"Электроонная почта></param>
-        /// <param name="number"Телефнный номер></param>
-        /// <param name="idVK"ID Вконтакте></param>
+        /// <param name="surname">Фамилия</param>
+        /// <param name="name">Имя</param>
+        /// <param name="birthDate">День Рождения</param>
+        /// <param name="email">Электроонная почта</param>
+        /// <param name="number">Телефнный номер</param>
+        /// <param name="idVK">ID Вконтакте</param>
         [JsonConstructor]
         public Contact(string name, string surname, string email, string idVK, 
             DateTime birthDate, long number)
