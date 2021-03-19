@@ -109,6 +109,7 @@
             this.GitHubLinkLabel.TabIndex = 8;
             this.GitHubLinkLabel.TabStop = true;
             this.GitHubLinkLabel.Text = "https://github.com/Ani-Mnatsakanyan/ContactsApp";
+            this.GitHubLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.GitHubLinkLabel_LinkClicked);
             // 
             // AuthorAbout
             // 
