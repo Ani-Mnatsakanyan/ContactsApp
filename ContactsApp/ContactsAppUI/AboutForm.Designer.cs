@@ -137,6 +137,7 @@
             this.MaximumSize = new System.Drawing.Size(412, 379);
             this.MinimumSize = new System.Drawing.Size(412, 379);
             this.Name = "AboutForm";
+            this.ShowIcon = false;
             this.Text = "AboutForm";
             this.ResumeLayout(false);
             this.PerformLayout();

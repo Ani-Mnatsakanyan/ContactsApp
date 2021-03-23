@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dateBirthDay = new System.Windows.Forms.DateTimePicker();
+            this.DateBirthDay = new System.Windows.Forms.DateTimePicker();
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.SurnameLabel = new System.Windows.Forms.Label();
             this.EmailLabel = new System.Windows.Forms.Label();
@@ -44,19 +44,22 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // dateBirthDay
+            // DateBirthDay
             // 
-            this.dateBirthDay.Location = new System.Drawing.Point(78, 78);
-            this.dateBirthDay.Name = "dateBirthDay";
-            this.dateBirthDay.Size = new System.Drawing.Size(309, 20);
-            this.dateBirthDay.TabIndex = 26;
+            this.DateBirthDay.Location = new System.Drawing.Point(78, 78);
+            this.DateBirthDay.Name = "DateBirthDay";
+            this.DateBirthDay.Size = new System.Drawing.Size(309, 20);
+            this.DateBirthDay.TabIndex = 25;
+            this.DateBirthDay.ValueChanged += new System.EventHandler(this.DateBirthDay_ValueChanged);
             // 
             // NameTextBox
             // 
             this.NameTextBox.Location = new System.Drawing.Point(78, 54);
             this.NameTextBox.Name = "NameTextBox";
             this.NameTextBox.Size = new System.Drawing.Size(309, 20);
-            this.NameTextBox.TabIndex = 25;
+            this.NameTextBox.TabIndex = 24;
+            this.NameTextBox.TextChanged += new System.EventHandler(this.NameTextBox_Leave);
+            this.NameTextBox.Leave += new System.EventHandler(this.NameTextBox_Leave);
             // 
             // SurnameLabel
             // 
@@ -90,7 +93,9 @@
             this.PhoneTextBox.Location = new System.Drawing.Point(78, 105);
             this.PhoneTextBox.Name = "PhoneTextBox";
             this.PhoneTextBox.Size = new System.Drawing.Size(309, 20);
-            this.PhoneTextBox.TabIndex = 24;
+            this.PhoneTextBox.TabIndex = 26;
+            this.PhoneTextBox.TextChanged += new System.EventHandler(this.PhoneTextBox_Leave);
+            this.PhoneTextBox.Leave += new System.EventHandler(this.PhoneTextBox_Leave);
             // 
             // BirthDayLabel
             // 
@@ -125,40 +130,43 @@
             this.SurnameTextBox.Name = "SurnameTextBox";
             this.SurnameTextBox.Size = new System.Drawing.Size(309, 20);
             this.SurnameTextBox.TabIndex = 23;
+            this.SurnameTextBox.TextChanged += new System.EventHandler(this.SurnameTextBox_Leave);
+            this.SurnameTextBox.Leave += new System.EventHandler(this.SurnameTextBox_Leave);
             // 
             // EmailTextBox
             // 
             this.EmailTextBox.Location = new System.Drawing.Point(78, 131);
             this.EmailTextBox.Name = "EmailTextBox";
             this.EmailTextBox.Size = new System.Drawing.Size(309, 20);
-            this.EmailTextBox.TabIndex = 22;
+            this.EmailTextBox.TabIndex = 27;
+            this.EmailTextBox.TextChanged += new System.EventHandler(this.EmailTextBox_TextChanged);
             // 
             // IdVkTextBox
             // 
             this.IdVkTextBox.Location = new System.Drawing.Point(78, 164);
             this.IdVkTextBox.Name = "IdVkTextBox";
             this.IdVkTextBox.Size = new System.Drawing.Size(309, 20);
-            this.IdVkTextBox.TabIndex = 21;
+            this.IdVkTextBox.TabIndex = 28;
             // 
             // buttonCancel
             // 
             this.buttonCancel.Location = new System.Drawing.Point(312, 202);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 28;
+            this.buttonCancel.TabIndex = 30;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
             // buttonOK
             // 
             this.buttonOK.Location = new System.Drawing.Point(231, 202);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonOK.TabIndex = 27;
+            this.buttonOK.TabIndex = 29;
             this.buttonOK.Text = "ОК";
             this.buttonOK.UseVisualStyleBackColor = true;
-            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+            this.buttonOK.Click += new System.EventHandler(this.ButtonOK_Click);
             // 
             // EditForm
             // 
@@ -167,7 +175,7 @@
             this.ClientSize = new System.Drawing.Size(410, 239);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
-            this.Controls.Add(this.dateBirthDay);
+            this.Controls.Add(this.DateBirthDay);
             this.Controls.Add(this.NameTextBox);
             this.Controls.Add(this.SurnameLabel);
             this.Controls.Add(this.EmailLabel);
@@ -179,7 +187,12 @@
             this.Controls.Add(this.SurnameTextBox);
             this.Controls.Add(this.EmailTextBox);
             this.Controls.Add(this.IdVkTextBox);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(426, 278);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(426, 278);
             this.Name = "EditForm";
+            this.ShowIcon = false;
             this.Text = "EditForm";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -188,7 +201,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DateTimePicker dateBirthDay;
+        private System.Windows.Forms.DateTimePicker DateBirthDay;
         private System.Windows.Forms.TextBox NameTextBox;
         private System.Windows.Forms.Label SurnameLabel;
         private System.Windows.Forms.Label EmailLabel;

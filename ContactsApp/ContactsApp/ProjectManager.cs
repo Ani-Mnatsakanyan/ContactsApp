@@ -18,7 +18,7 @@ namespace ContactsApp
             {
                 var appDataFolder =
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                var defaultFilename = appDataFolder + $@"\ContactsApp\contacts.json";
+                var defaultFilename = appDataFolder + $@"\ContactsApp\contacts.txt";
                 return defaultFilename;
             }
         }
@@ -30,18 +30,12 @@ namespace ContactsApp
         /// <param name="filename"></param>
         public static void SaveToFile(Project project, string filename)
         {
-            var serializer = new JsonSerializer()
-            {
-                Formatting = Formatting.Indented,
-                TypeNameHandling = TypeNameHandling.All
-            };
+            var serializer = new JsonSerializer();
             using (var sw = new StreamWriter(filename))
-            {
-                using (var writer = new JsonTextWriter(sw))
-                {
-                    //Вызываем сериализацию и передаем объект, который хотим сериализовать
-                    serializer.Serialize(writer, project);
-                }
+            using (var writer = new JsonTextWriter(sw))
+            { 
+                //Вызываем сериализацию и передаем объект, который хотим сериализовать
+                serializer.Serialize(writer, project);
             }
         }
 
@@ -57,24 +51,18 @@ namespace ContactsApp
             }
 
             var project = new Project();
-            var serializer = new JsonSerializer()
-            {
-                Formatting = Formatting.Indented,
-                TypeNameHandling = TypeNameHandling.All
-            };
+            var serializer = new JsonSerializer();
 
             using (var sr = new StreamReader(filename))
-            {
-                using (var reader = new JsonTextReader(sr))
-                {
-                    project = (Project) serializer.Deserialize<Project>(reader);
-                    if (project == null)
-                    {
-                        return new Project();
-                    }
+            using (var reader = new JsonTextReader(sr))
+            { 
+                project = (Project)serializer.Deserialize<Project>(reader);
+                if (project == null)
+                { 
+                    return new Project();
                 }
-                return project;
             }
+            return project;
         }
     }
 }
