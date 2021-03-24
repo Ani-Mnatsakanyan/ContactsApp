@@ -71,7 +71,7 @@ namespace ContactsApp
         /// <summary>
         /// Свойство номера телефона
         /// </summary>
-        public PhoneNumber Number { get; set; } = new PhoneNumber();
+        public PhoneNumber PhoneNumber { get; set; } = new PhoneNumber();
 
         /// <summary>
         /// Свойства даты рождения
@@ -174,14 +174,14 @@ namespace ContactsApp
         /// <param name="idVK">ID Вконтакте</param>
         [JsonConstructor]
         public Contact(string name, string surname, string email, string idVK, 
-            DateTime birthDate, long number)
+            DateTime birthDate, PhoneNumber number)
         {
             this.BirthDate = birthDate;
             this.Email = email;
             this.IdVK = idVK;
             this.Name = name;
             this.Surname = surname;
-            this.Number = new PhoneNumber(number);
+            this.PhoneNumber = number;
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace ContactsApp
         public object Clone()
         {
             return new Contact(this.Name, this.Surname, this.Email, this.IdVK,
-                this.BirthDate, this.Number.Number);
+                this.BirthDate, this.PhoneNumber);
         }
     }
 }

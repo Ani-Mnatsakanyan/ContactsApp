@@ -40,7 +40,7 @@ namespace ContactsAppUI
                 NameTextBox.Text = _contact.Name;
                 SurnameTextBox.Text = _contact.Surname;
                 EmailTextBox.Text = _contact.Email;
-                PhoneTextBox.Text = _contact.Number.Number.ToString();
+                PhoneTextBox.Text = _contact.PhoneNumber.Number.ToString();
                 IdVkTextBox.Text = _contact.IdVK;
                 DateBirthDay.Value = _contact.BirthDate;
             }
@@ -78,12 +78,12 @@ namespace ContactsAppUI
             {
                 _contact = new Contact
                 {
-                    Number = new PhoneNumber(),
+                    PhoneNumber = new PhoneNumber(),
                     Name = NameTextBox.Text,
                     Surname = SurnameTextBox.Text,
                     Email = EmailTextBox.Text
                 };
-                _contact.Number.Number = Convert.ToInt64(PhoneTextBox.Text);
+                _contact.PhoneNumber.Number = Convert.ToInt64(PhoneTextBox.Text);
                 _contact.IdVK = IdVkTextBox.Text;
                 _contact.BirthDate = DateBirthDay.Value;
                 var editForm = new EditForm();

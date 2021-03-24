@@ -31,7 +31,7 @@ namespace ContactsAppUI
         public ContactsForm()
         {
             InitializeComponent();
-            _project = ProjectManager.LoadFromFile(defaultFilename);
+            _project = ProjectManager.LoadFromFile(defaultFilename, "contact.json");
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void ContactsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ProjectManager.SaveToFile(_project, defaultFilename);
+            ProjectManager.SaveToFile(_project, defaultFilename, "contact.json");
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace ContactsAppUI
             DateBirthDay.Value = _project.Contacts[ContactsListBox.SelectedIndex].BirthDate;
             EmailTextBox.Text = _project.Contacts[ContactsListBox.SelectedIndex].Email;
             IdVkTextBox.Text = _project.Contacts[ContactsListBox.SelectedIndex].IdVK;
-            PhoneTextBox.Text = _project.Contacts[ContactsListBox.SelectedIndex].Number.Number.ToString();
+            PhoneTextBox.Text = _project.Contacts[ContactsListBox.SelectedIndex].PhoneNumber.Number.ToString();
         }
     }
 }

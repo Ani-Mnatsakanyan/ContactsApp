@@ -28,41 +28,46 @@ namespace ContactsApp
         /// </summary>
         /// <param name="project"></param>
         /// <param name="filename"></param>
-        public static void SaveToFile(Project project, string filename)
+        public static void SaveToFile(Project project, string path, string filename)
         {
-            var serializer = new JsonSerializer();
-            using (var sw = new StreamWriter(filename))
+            if (!File.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            var serializer = new JsonSerializer()
+            {
+                Formatting = Formatting.Indented,
+                TypeNameHandling = TypeNameHandling.All
+            };
+            using (var sw = new StreamWriter(path + filename))
             using (var writer = new JsonTextWriter(sw))
-            { 
+            {
                 //Вызываем сериализацию и передаем объект, который хотим сериализовать
                 serializer.Serialize(writer, project);
             }
         }
-        
+
         /// <summary>
         /// Метод для загрузки информации по контактам
         /// </summary>
         /// <returns></returns>
-        public static Project LoadFromFile(string filename)
+        public static Project LoadFromFile(string path, string filename)
         {
-            if (!File.Exists(filename))
+            if (!File.Exists(path + filename))
             {
                 return new Project();
             }
 
-            var project = new Project();
-            var serializer = new JsonSerializer();
-
-            using (var sr = new StreamReader(filename))
+            var serializer = new JsonSerializer()
+            {
+                Formatting = Formatting.Indented,
+                TypeNameHandling = TypeNameHandling.All
+            };
+            using (var sr = new StreamReader(path + filename))
             using (var reader = new JsonTextReader(sr))
             {
-                project = (Project)serializer.Deserialize<Project>(reader);
-                if (project == null)
-                { 
-                    return new Project();
-                }
+                return (Project)serializer.Deserialize<Project>(reader);
             }
-            return project;
         }
     }
 }
