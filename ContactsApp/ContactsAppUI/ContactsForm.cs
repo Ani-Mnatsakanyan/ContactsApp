@@ -6,26 +6,32 @@ using ContactsApp;
 
 namespace ContactsAppUI
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public partial class ContactsForm : Form
     {
-        private BindingList<Contact> formlist;
         /// <summary>
         /// Поле хранящее список контактов
         /// </summary>
-        private Project _project = new Project();
+        private Project _project;
+
+        private int index;
 
         /// <summary>
-        /// 
+        /// Переменная хранящая путь 
         /// </summary>
-        private string aga = ProjectManager.DefaultFilename;
+        string defaultFilename = ProjectManager.DefaultFilename;
 
+        /// <summary>
+        /// обновляющийся список
+        /// </summary>
+        private BindingList<Contact> _formList;
+
+        /// <summary>
+        /// Инициализирует все компоненты, загружает информацию по контактам 
+        /// </summary>
         public ContactsForm()
         {
             InitializeComponent();
-            _project = new Project();
+            _project = ProjectManager.LoadFromFile(defaultFilename);
         }
 
         /// <summary>
@@ -115,6 +121,7 @@ namespace ContactsAppUI
             var aboutForm = new AboutForm();
             aboutForm.ShowDialog();
         }
+
         /// <summary>
         /// Выход из приложения
         /// </summary>
@@ -122,18 +129,50 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ProjectManager.SaveToFile(_project, aga);
             Application.Exit();
         }
 
         /// <summary>
-        /// 
+        /// Обновление списка контактов
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ContactsForm_Load(object sender, EventArgs e)
         {
-            _project = ProjectManager.LoadFromFile(aga);
+            _formList = new BindingList<Contact>(_project.Contacts);
+            for (int i = 0; i < _formList.Count; i++)
+            {
+                ContactsListBox.Items.Add(_project.Contacts[i].Surname);
+            }
+        }
+
+        /// <summary>
+        /// Сохраняет данные при закрытии формы 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ContactsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ProjectManager.SaveToFile(_project, defaultFilename);
+        }
+
+        /// <summary>
+        /// Отображение контакта на форме
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ContactsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ContactsListBox.SelectedIndex == -1)
+            {
+                ContactsListBox.SelectedIndex = index;
+            }
+            NameTextBox.Text = _project.Contacts[ContactsListBox.SelectedIndex].Name;
+            SurnameTextBox.Text = _project.Contacts[ContactsListBox.SelectedIndex].Surname;
+            DateBirthDay.Value = _project.Contacts[ContactsListBox.SelectedIndex].BirthDate;
+            EmailTextBox.Text = _project.Contacts[ContactsListBox.SelectedIndex].Email;
+            IdVkTextBox.Text = _project.Contacts[ContactsListBox.SelectedIndex].IdVK;
+            PhoneTextBox.Text = _project.Contacts[ContactsListBox.SelectedIndex].Number.Number.ToString();
         }
     }
 }

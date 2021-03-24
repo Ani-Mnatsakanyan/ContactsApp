@@ -16,10 +16,12 @@ namespace ContactsAppUI
         /// Поле, хранящее контакт 
         /// </summary>
         private Contact _contact;
+
         /// <summary>
-        /// 
+        /// Переменная для проверки корректного ввода всех TextBox
         /// </summary>
         bool _globalCheck;
+
         /// <summary>
         /// Переменная, хранящая недопустимые для ввода символы
         /// </summary>
@@ -43,14 +45,16 @@ namespace ContactsAppUI
                 DateBirthDay.Value = _contact.BirthDate;
             }
         }
-
+        /// <summary>
+        /// Инициализирует все компоненты
+        /// </summary>
         public EditForm()
         {
             InitializeComponent();
         }
 
         /// <summary>
-        /// Реакция нажатия на кнопку ОК
+        /// Реакция нажатия на кнопку ОК после заполнения всех TextBox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -157,7 +161,7 @@ namespace ContactsAppUI
         }
 
        /// <summary>
-       /// Проверку корректного ввода почты
+       /// Проверку ввода почты
        /// </summary>
        /// <param name="sender"></param>
        /// <param name="e"></param>
@@ -167,7 +171,7 @@ namespace ContactsAppUI
         }
 
         /// <summary>
-        /// Проверку корректного ввода даты рождения
+        /// Проверка ввода даты рождения
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

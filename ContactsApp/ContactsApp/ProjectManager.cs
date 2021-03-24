@@ -18,7 +18,7 @@ namespace ContactsApp
             {
                 var appDataFolder =
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                var defaultFilename = appDataFolder + $@"\ContactsApp\contacts.txt";
+                var defaultFilename = appDataFolder + $@"\ContactsApp\contacts.json";
                 return defaultFilename;
             }
         }
@@ -38,7 +38,7 @@ namespace ContactsApp
                 serializer.Serialize(writer, project);
             }
         }
-
+        
         /// <summary>
         /// Метод для загрузки информации по контактам
         /// </summary>
@@ -55,7 +55,7 @@ namespace ContactsApp
 
             using (var sr = new StreamReader(filename))
             using (var reader = new JsonTextReader(sr))
-            { 
+            {
                 project = (Project)serializer.Deserialize<Project>(reader);
                 if (project == null)
                 { 
