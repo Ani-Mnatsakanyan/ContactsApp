@@ -177,7 +177,7 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void DateBirthDay_ValueChanged(object sender, EventArgs e)
         {
-            if (DateBirthDay.Value.Year >= 1900 && DateBirthDay.Value <= DateTime.Today)
+            if (DateBirthDay.Value.Year >= 1900 && DateBirthDay.Value <= DateTime.Now)
             {
                 BirthDayLabel.Text = "BirthDay";
                 BirthDayLabel.ForeColor = Color.Black;
