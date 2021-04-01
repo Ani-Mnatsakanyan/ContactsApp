@@ -7,7 +7,7 @@ namespace ContactsApp
     /// Класс, хранящий информацию о контакте:
     /// имя, фамилия, почта, idvk
     /// </summary>
-    public class Contact : ICloneable
+    public class Contact 
     {
         /// <summary>
         /// Фамилия
@@ -39,10 +39,7 @@ namespace ContactsApp
         /// </summary>
         public string Surname
         {
-            get
-            {
-                return _surname;
-            }
+            get => _surname;
             set
             {
                 ValidateTitleLength(value);
@@ -56,10 +53,7 @@ namespace ContactsApp
         /// </summary>
         public string Name
         {
-            get
-            {
-                return _name;
-            }
+            get => _name;
             set
             {
                 ValidateTitleLength(value);
@@ -78,10 +72,7 @@ namespace ContactsApp
         /// </summary>
         public DateTime BirthDate
         {
-            get
-            {
-                return _birthDate;
-            }
+            get => _birthDate;
             set
             {
                 DateTime nowDate = DateTime.Now;
@@ -98,10 +89,7 @@ namespace ContactsApp
         /// </summary>
         public string Email
         {
-            get
-            {
-                return _email;
-            }
+            get => _email;
             set
             {
                 ValidateTitleLength(value);
@@ -114,13 +102,10 @@ namespace ContactsApp
         /// </summary>
         public string IdVK
         {
-            get
-            {
-                return _idVK;
-            }
+            get => _idVK;
             set
             { 
-                if (value.Length > 15 && value != null)
+                if (value.Length > 15)
                 {
                     throw new ArgumentException("Ошибка. id в VK не должен быть более 15 символов");
                 }
@@ -137,8 +122,7 @@ namespace ContactsApp
         /// <exception cref="ArgumentException"></exception> 
         void ValidateTitleLength(string str)
         {
-           // var condition = 0;
-            if (str == null || str == String.Empty)
+            if (string.IsNullOrEmpty(str))
             {
                 throw new ArgumentException("Ошибка. Пустая строка");
             }
@@ -182,16 +166,6 @@ namespace ContactsApp
             this.Name = name;
             this.Surname = surname;
             this.PhoneNumber = number;
-        }
-
-        /// <summary>
-        /// Метод, реализующий копирование объекта
-        /// </summary>
-        /// <returns>Воозвращает новый объект == копия оригинала </returns>
-        public object Clone()
-        {
-            return new Contact(this.Name, this.Surname, this.Email, this.IdVK,
-                this.BirthDate, this.PhoneNumber);
         }
     }
 }

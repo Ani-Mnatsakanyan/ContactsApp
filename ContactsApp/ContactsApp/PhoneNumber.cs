@@ -19,13 +19,10 @@ namespace ContactsApp
         /// <exception cref="ArgumentException"></exception>
         public long Number
         {
-            get
-            {
-                return _number;
-            }
+            get => _number;
             set
             {
-                if ((value >= 70000000000 && value <= 79999999999))
+                if (value >= 70000000000 && value <= 79999999999)
                 {
                     _number = value;
                 }
@@ -35,15 +32,6 @@ namespace ContactsApp
                         "Ошибка. Номер должен содержать 11 цифр, первая цифра должна быть 7");
                 }
             }
-        }
-
-        /// <summary>
-        /// Конструктор, принимающий на вход номер
-        /// </summary>
-        /// <param name="number">номер телефона</param> 
-        public PhoneNumber(long number)
-        { 
-            this.Number = number;
         }
 
         /// <summary>
