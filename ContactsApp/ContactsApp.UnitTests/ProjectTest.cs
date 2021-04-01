@@ -8,9 +8,6 @@ using ContactsApp;
 
 namespace ContactsApp.UnitTests
 {
-    /// <summary>
-    /// 
-    /// </summary>
     class ProjectTest
     {
     }

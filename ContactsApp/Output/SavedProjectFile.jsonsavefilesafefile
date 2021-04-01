@@ -1,0 +1,32 @@
+{
+  "$type": "ContactsApp.Project, ContactsApp",
+  "Contacts": {
+    "$type": "System.Collections.Generic.List`1[[ContactsApp.Contact, ContactsApp]], mscorlib",
+    "$values": [
+      {
+        "$type": "ContactsApp.Contact, ContactsApp",
+        "Surname": "Mnatsakanyan",
+        "Name": "Ani",
+        "PhoneNumber": {
+          "$type": "ContactsApp.PhoneNumber, ContactsApp",
+          "Number": 79521817225
+        },
+        "BirthDate": "2000-08-30T00:00:00",
+        "Email": "Anime@mail.ru",
+        "IdVK": "iamani"
+      },
+      {
+        "$type": "ContactsApp.Contact, ContactsApp",
+        "Surname": "Ivan",
+        "Name": "Ivanov",
+        "PhoneNumber": {
+          "$type": "ContactsApp.PhoneNumber, ContactsApp",
+          "Number": 79139999999
+        },
+        "BirthDate": "1980-07-27T00:00:00",
+        "Email": "Ivanov@mail.ru",
+        "IdVK": "Id758964"
+      }
+    ]
+  }
+}
