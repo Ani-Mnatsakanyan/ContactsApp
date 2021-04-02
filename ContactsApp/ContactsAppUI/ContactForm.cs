@@ -10,7 +10,7 @@ namespace ContactsAppUI
     /// <summary>
     /// Класс редактирования и добавления контактов 
     /// </summary>
-    public partial class EditForm : Form 
+    public partial class ContactForm : Form 
     {
         /// <summary>
         /// Поле, хранящее контакт 
@@ -20,7 +20,7 @@ namespace ContactsAppUI
         /// <summary>
         /// Переменная для проверки корректного ввода всех TextBox
         /// </summary>
-        bool _globalCheck;
+        bool _IsCorrectContact;
 
         /// <summary>
         /// Переменная, хранящая недопустимые для ввода символы
@@ -48,7 +48,7 @@ namespace ContactsAppUI
         /// <summary>
         /// Инициализирует все компоненты
         /// </summary>
-        public EditForm()
+        public ContactForm()
         {
             InitializeComponent();
         }
@@ -65,14 +65,14 @@ namespace ContactsAppUI
                 PhoneTextBox.BackColor == Color.Red || 
                 BirthDayLabel.Text == "Error")
             {
-                _globalCheck = true;
+                _IsCorrectContact = true;
             }
             else
             {
-                _globalCheck = false;
+                _IsCorrectContact = false;
             }
 
-            if (NameTextBox.Text != null && SurnameTextBox.Text != null && _globalCheck == false
+            if (NameTextBox.Text != null && SurnameTextBox.Text != null && _IsCorrectContact == false
                                          && PhoneTextBox.Text.Length == 11 && NameTextBox.Text != string.Empty
                                          && SurnameTextBox.Text != string.Empty)
             {
@@ -86,7 +86,7 @@ namespace ContactsAppUI
                 _contact.PhoneNumber.Number = Convert.ToInt64(PhoneTextBox.Text);
                 _contact.IdVK = IdVkTextBox.Text;
                 _contact.BirthDate = DateBirthDay.Value;
-                var editForm = new EditForm();
+                var editForm = new ContactForm();
                 Close();
             }
             else
@@ -114,7 +114,8 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void SurnameTextBox_Leave(object sender, EventArgs e)
         {
-            var check = false;
+            var check = false || SurnameTextBox.Text.Length >= 50;
+
             for (var i = 0; i < SurnameTextBox.TextLength; i++)
             {
                 foreach (var t in _incorrectSymbols.Where(t => SurnameTextBox.Text[i] == t))
@@ -132,7 +133,7 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void NameTextBox_Leave(object sender, EventArgs e)
         {
-            var check = false;
+            var check = false || NameTextBox.Text.Length >= 15;
             for (var i = 0; i < NameTextBox.TextLength; i++)
             {
                 foreach (var t in _incorrectSymbols)

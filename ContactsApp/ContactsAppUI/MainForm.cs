@@ -6,32 +6,25 @@ using ContactsApp;
 
 namespace ContactsAppUI
 {
-    public partial class ContactsForm : Form
+    public partial class MainForm : Form
     {
         /// <summary>
         /// Поле хранящее список контактов
         /// </summary>
         private Project _project;
 
-        private int index;
-
         /// <summary>
         /// Переменная хранящая путь 
         /// </summary>
-        string defaultFilename = ProjectManager.DefaultFilename;
-
-        /// <summary>
-        /// обновляющийся список
-        /// </summary>
-        private BindingList<Contact> _formList;
+        private string _defaultFilename = ProjectManager.DefaultFilename;
 
         /// <summary>
         /// Инициализирует все компоненты, загружает информацию по контактам 
         /// </summary>
-        public ContactsForm()
+        public MainForm()
         {
             InitializeComponent();
-            _project = ProjectManager.LoadFromFile(defaultFilename, "contact.json");
+            _project = ProjectManager.LoadFromFile(_defaultFilename, "contact.json");
         }
 
         /// <summary>
@@ -41,33 +34,20 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void Remove_Click(object sender, EventArgs e)
         {
-            if (ContactsListBox.Items.Count != 0)
+            var selectedIndex = ContactsListBox.SelectedIndex;
+            if (selectedIndex == -1)
             {
-                var selectedIndex = ContactsListBox.SelectedIndex;
-                if (ContactsListBox.Items.Count <= 0) return;
-                if (selectedIndex < 0 || selectedIndex == 0 || selectedIndex == 1)
-                {
-                    selectedIndex = _project.Contacts.Count - 1;
-                }
-                else
-                {
-                    MessageBox.Show("Error: you haven't contacts for delete", "Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                DialogResult result = MessageBox.Show("Are you wanna delete " +
-                                                      _project.Contacts[ContactsListBox.SelectedIndex].Surname + "?", "Verification",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                return;
+            }
+                
+            var result = MessageBox.Show("Are you wanna delete " +
+                                         _project.Contacts[selectedIndex].Surname + "?", "Verification",
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
              
-                if (result == DialogResult.OK)
-                {  
-                    selectedIndex = ContactsListBox.SelectedIndex;
-                    _project.Contacts.RemoveAt(selectedIndex);
-                    ContactsListBox.Items.Clear();
-                    foreach (var contact in _project.Contacts)
-                    {
-                        ContactsListBox.Items.Add(contact.Surname);
-                    }
-                }
+            if (result == DialogResult.OK)
+            {  
+                _project.Contacts.RemoveAt(selectedIndex);
+                ContactsListBox.Items.RemoveAt(selectedIndex);
             }
         }
 
@@ -78,7 +58,7 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void Add_Click(object sender, EventArgs e)
         {
-            EditForm editForm = new EditForm(); 
+            ContactForm editForm = new ContactForm(); 
 
             editForm.ShowDialog();  
 
@@ -95,9 +75,9 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void EditButton_Click(object sender, EventArgs e)
         {
-            if (ContactsListBox.SelectedIndex >= 0 && ContactsListBox.SelectedIndex < ContactsListBox.Items.Count)
+            if (ContactsListBox.SelectedIndex >= 0)
             {
-                var editForm = new EditForm
+                var editForm = new ContactForm
                 {
                     Contact = _project.Contacts[ContactsListBox.SelectedIndex]
                 };
@@ -139,8 +119,8 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void ContactsForm_Load(object sender, EventArgs e)
         {
-            _formList = new BindingList<Contact>(_project.Contacts);
-            for (int i = 0; i < _formList.Count; i++)
+            //_formList = new BindingList<Contact>(_project.Contacts);
+            for (int i = 0; i < _project.Contacts.Count; i++)
             {
                 ContactsListBox.Items.Add(_project.Contacts[i].Surname);
             }
@@ -153,7 +133,7 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void ContactsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ProjectManager.SaveToFile(_project, defaultFilename, "contact.json");
+            ProjectManager.SaveToFile(_project, _defaultFilename, "contact.json");
         }
 
         /// <summary>
@@ -165,14 +145,16 @@ namespace ContactsAppUI
         {
             if (ContactsListBox.SelectedIndex == -1)
             {
-                ContactsListBox.SelectedIndex = index;
+                return;
             }
-            NameTextBox.Text = _project.Contacts[ContactsListBox.SelectedIndex].Name;
-            SurnameTextBox.Text = _project.Contacts[ContactsListBox.SelectedIndex].Surname;
-            DateBirthDay.Value = _project.Contacts[ContactsListBox.SelectedIndex].BirthDate;
-            EmailTextBox.Text = _project.Contacts[ContactsListBox.SelectedIndex].Email;
-            IdVkTextBox.Text = _project.Contacts[ContactsListBox.SelectedIndex].IdVK;
-            PhoneTextBox.Text = _project.Contacts[ContactsListBox.SelectedIndex].PhoneNumber.Number.ToString();
+
+            var contact = _project.Contacts[ContactsListBox.SelectedIndex];
+            NameTextBox.Text = contact.Name;
+            SurnameTextBox.Text = contact.Surname;
+            DateBirthDay.Value = contact.BirthDate;
+            EmailTextBox.Text = contact.Email;
+            IdVkTextBox.Text = contact.IdVK;
+            PhoneTextBox.Text = contact.PhoneNumber.Number.ToString();
         }
     }
 }

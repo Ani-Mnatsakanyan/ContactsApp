@@ -1,6 +1,6 @@
 ﻿namespace ContactsAppUI
 {
-    partial class EditForm
+    partial class ContactForm
     {
         /// <summary>
         /// Required designer variable.
@@ -46,7 +46,7 @@
             // 
             // DateBirthDay
             // 
-            this.DateBirthDay.Location = new System.Drawing.Point(78, 78);
+            this.DateBirthDay.Location = new System.Drawing.Point(78, 79);
             this.DateBirthDay.Name = "DateBirthDay";
             this.DateBirthDay.Size = new System.Drawing.Size(309, 20);
             this.DateBirthDay.TabIndex = 25;
@@ -54,7 +54,7 @@
             // 
             // NameTextBox
             // 
-            this.NameTextBox.Location = new System.Drawing.Point(78, 54);
+            this.NameTextBox.Location = new System.Drawing.Point(78, 53);
             this.NameTextBox.Name = "NameTextBox";
             this.NameTextBox.Size = new System.Drawing.Size(309, 20);
             this.NameTextBox.TabIndex = 24;
@@ -64,7 +64,7 @@
             // SurnameLabel
             // 
             this.SurnameLabel.AutoSize = true;
-            this.SurnameLabel.Location = new System.Drawing.Point(20, 30);
+            this.SurnameLabel.Location = new System.Drawing.Point(20, 31);
             this.SurnameLabel.Name = "SurnameLabel";
             this.SurnameLabel.Size = new System.Drawing.Size(52, 13);
             this.SurnameLabel.TabIndex = 15;
@@ -82,7 +82,7 @@
             // NameLabel
             // 
             this.NameLabel.AutoSize = true;
-            this.NameLabel.Location = new System.Drawing.Point(32, 57);
+            this.NameLabel.Location = new System.Drawing.Point(32, 56);
             this.NameLabel.Name = "NameLabel";
             this.NameLabel.Size = new System.Drawing.Size(38, 13);
             this.NameLabel.TabIndex = 16;
@@ -100,7 +100,7 @@
             // BirthDayLabel
             // 
             this.BirthDayLabel.AutoSize = true;
-            this.BirthDayLabel.Location = new System.Drawing.Point(22, 82);
+            this.BirthDayLabel.Location = new System.Drawing.Point(22, 83);
             this.BirthDayLabel.Name = "BirthDayLabel";
             this.BirthDayLabel.Size = new System.Drawing.Size(50, 13);
             this.BirthDayLabel.TabIndex = 17;
@@ -109,7 +109,7 @@
             // IdVKLabel
             // 
             this.IdVKLabel.AutoSize = true;
-            this.IdVKLabel.Location = new System.Drawing.Point(27, 167);
+            this.IdVKLabel.Location = new System.Drawing.Point(27, 160);
             this.IdVKLabel.Name = "IdVKLabel";
             this.IdVKLabel.Size = new System.Drawing.Size(45, 13);
             this.IdVKLabel.TabIndex = 20;
@@ -118,7 +118,7 @@
             // PhoneLabel
             // 
             this.PhoneLabel.AutoSize = true;
-            this.PhoneLabel.Location = new System.Drawing.Point(29, 108);
+            this.PhoneLabel.Location = new System.Drawing.Point(29, 109);
             this.PhoneLabel.Name = "PhoneLabel";
             this.PhoneLabel.Size = new System.Drawing.Size(41, 13);
             this.PhoneLabel.TabIndex = 18;
@@ -143,7 +143,7 @@
             // 
             // IdVkTextBox
             // 
-            this.IdVkTextBox.Location = new System.Drawing.Point(78, 164);
+            this.IdVkTextBox.Location = new System.Drawing.Point(78, 157);
             this.IdVkTextBox.Name = "IdVkTextBox";
             this.IdVkTextBox.Size = new System.Drawing.Size(309, 20);
             this.IdVkTextBox.TabIndex = 28;
@@ -168,7 +168,7 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.ButtonOK_Click);
             // 
-            // EditForm
+            // ContactForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -191,7 +191,7 @@
             this.MaximumSize = new System.Drawing.Size(426, 278);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(426, 278);
-            this.Name = "EditForm";
+            this.Name = "ContactForm";
             this.ShowIcon = false;
             this.Text = "EditForm";
             this.ResumeLayout(false);

@@ -51,6 +51,11 @@ namespace ContactsApp
         /// Метод для загрузки информации по контактам
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="FileNotFoundException"></exception>
+        /// <exception cref="DirectoryNotFoundException"></exception>
+        /// <exception cref="IOException"></exception>
         public static Project LoadFromFile(string path, string filename)
         {
             if (!File.Exists(path + filename))
@@ -63,10 +68,18 @@ namespace ContactsApp
                 Formatting = Formatting.Indented,
                 TypeNameHandling = TypeNameHandling.All
             };
-            using (var sr = new StreamReader(path + filename))
-            using (var reader = new JsonTextReader(sr))
+            try
             {
-                return (Project)serializer.Deserialize<Project>(reader);
+                using (var sr = new StreamReader(path + filename))
+                using (var reader = new JsonTextReader(sr))
+                {
+                    var project = serializer.Deserialize<Project>(reader);
+                    return project ?? new Project();
+                }
+            }
+            catch
+            {
+                return new Project();
             }
         }
     }

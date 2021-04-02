@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Data;
 using System.IO;
 using System.Reflection;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace ContactsApp.UnitTests
 {
@@ -14,9 +12,6 @@ namespace ContactsApp.UnitTests
     [TestFixture]
     class ProjectManagerTest
     {
-       /* private const string CorrectProjectFile = "\\ContactsApp.UnitTests.dll\\TestData\\correctproject.json";
-        private const string IncorrectProjectFile = "\\ContactsApp.UnitTests.dll\\TestData\\incorrectproject.json";
-        private const string SavedFile = "\\ContactsApp.UnitTests.dll\\TestData\\SavedProjectFile.json";*/
         public string Location
         {
             get
@@ -77,13 +72,27 @@ namespace ContactsApp.UnitTests
         }
 
         [TestCase(Description = "Негативный тест загрузки", TestName ="Загрузка некорректного файла")]
-        public void ProjectManager_LoadIncorrectData_FileLoadInorrectly()
+        public void ProjectManager_LoadIncorrectData_FileLoadIncorrectly()
         {
-            // Assert
-            Assert.Throws<JsonReaderException>(code: () =>
-            { 
-                var actualProject = ProjectManager.LoadFromFile(path: Location, filename: "SavedProjectFile.json");
-            }, message: "Должно возникать исключение, если файл испорчен.");
+            //Act
+            var actualProject = ProjectManager.LoadFromFile(Location, "incorrectproject.json");
+            Assert.IsNotNull(actualProject);
+            var expectedCount = 0;
+
+            //Assert
+            Assert.AreEqual(expectedCount, actualProject.Contacts.Count);
+        }
+
+        [TestCase(Description = "Негативный тест загрузки", TestName = "Загрузка пустого файла")]
+        public void ProjectManager_LoadNullData_FileLoadIncorrectly()
+        {
+            //Act
+            var actualProject = ProjectManager.LoadFromFile("\\Alala", "\\Alalal.json\\");
+            Assert.IsNotNull(actualProject);
+            var expectedCount = 0;
+
+            //Assert
+            Assert.AreEqual(expectedCount, actualProject.Contacts);
         }
 
         [TestCase(Description = "", TestName = "Позитивный тест сохранения")]

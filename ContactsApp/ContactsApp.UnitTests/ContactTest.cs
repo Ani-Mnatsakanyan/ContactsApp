@@ -11,7 +11,6 @@ namespace ContactsApp.UnitTests
     {
         private Contact _testContact;
 
-        [SetUp]
         public void SetUp()
         {
             _testContact = new Contact();
@@ -20,6 +19,7 @@ namespace ContactsApp.UnitTests
         [Test(Description = "Позитивный тест геттера Surname")]
         public void TestSurnameGet_CorrectValue()
         {
+            SetUp();
             var expected = "Иванов";
             _testContact.Surname = expected;
             var actual = _testContact.Surname;
@@ -29,12 +29,12 @@ namespace ContactsApp.UnitTests
         [Test(Description = "Позитивный тест сеттера Surname")]
         public void TestSurnameSet_CorrectValue()
         {
+            SetUp();
             _testContact.Surname = "Иванов";
             var actual = _testContact.Surname;
             Assert.AreEqual(actual, _testContact.Surname, "Сеттер неправильно заполнил фамилию");
         }
 
-        [Test(Description = "Присвоение неправильной фамилии")]
         [TestCase("", "Должно возникать исключение, если фамилия - пустая строка",
             TestName = "Присвоение пустой строки в качестве фамилии")]
         [TestCase("Смирнов-Смирнов-Смирнов-Смирнов-Смирнов-Смирнов-Смирнов-Смирнов", 
@@ -42,6 +42,7 @@ namespace ContactsApp.UnitTests
             TestName = "Присвоение неправильной фамилии больше 50 символов")]
         public void TestSurnameSet_ArgumentException(string wrongSurname, string message)
         {
+            SetUp();
             Assert.Throws<ArgumentException>(
                 () => { _testContact.Surname = wrongSurname; },
                 message);
@@ -50,6 +51,7 @@ namespace ContactsApp.UnitTests
         [Test(Description = "Позитивный тест геттера Name")]
         public void TestNameGet_CorrectValue()
         {
+            SetUp();
             var expected = "Иван";
 
             _testContact.Name = expected;
@@ -60,12 +62,12 @@ namespace ContactsApp.UnitTests
         [Test(Description = "Позитивный тест сеттера Name")]
         public void TestNameSet_CorrectValue()
         {
+            SetUp();
             _testContact.Name = "Иван";
             var actual = _testContact.Name;
             Assert.AreEqual(actual, _testContact.Name, "Сеттер неправильно заполнил имя");
         }
 
-        [Test(Description = "Присвоение неправильного имени")]
         [TestCase("", "Должно возникать исключение, если имя - пустая строка",
             TestName = "Присвоение пустой строки в качестве имени")]
         [TestCase("Иван-Иван-Иван-Иван-Иван-Иван-Иван-Иван-Иван-Иван-Иван", 
@@ -73,6 +75,7 @@ namespace ContactsApp.UnitTests
             TestName = "Присвоение неправильного имени больше 50 символов")]
         public void TestNameSet_ArgumentException(string wrongName, string message)
         {
+            SetUp();
             Assert.Throws<ArgumentException>(
             () => { _testContact.Name = wrongName; },
             message);
@@ -81,6 +84,7 @@ namespace ContactsApp.UnitTests
         [Test(Description = "Позитивный тест геттера Email")]
         public void TestMailGet_CorrectValue()
         {
+            SetUp();
             var expected = "Mnatsakanyan300800@mail.ru";
 
             _testContact.Email = expected;
@@ -91,13 +95,12 @@ namespace ContactsApp.UnitTests
         [Test(Description = "Позитивный тест сеттера Email")]
         public void TestMailSet_CorrectValue()
         {
+            SetUp();
             _testContact.Email = "mnatsakanyan.ani@mail.ru";
             var actual = _testContact.Email;
             Assert.AreEqual(actual, _testContact.Email, "Сеттер неправильно заполнил почту");
         }
 
-        
-        [Test(Description = "Негативный тест сеттера Email")]
         [TestCase("",
             "Должно возникать исключение, если Email - пустая строка",
             TestName = "Присвоение пустой строки в качестве почты")]
@@ -106,6 +109,7 @@ namespace ContactsApp.UnitTests
             TestName = "Присвоение неправильной почты больше 50 символов")]
         public void TestMailSet_ArgumentException(string wrongEmail, string message)
         {
+            SetUp();
             Assert.Throws<ArgumentException>(
                 () => { _testContact.Email = wrongEmail; },
                 message);
@@ -114,6 +118,7 @@ namespace ContactsApp.UnitTests
         [Test(Description = "Позитивный тест геттера IdVk")]
         public void TestIdVkGet_CorrectValue()
         {
+            SetUp();
             var expected = "id777777";
 
             _testContact.IdVK = expected;
@@ -124,12 +129,12 @@ namespace ContactsApp.UnitTests
         [Test(Description = "Позитивный тест сеттера IdVk")]
         public void TestIdVkSet_CorrectValue()
         {
+            SetUp();
             _testContact.IdVK = "iamani.i00";
             var actual = _testContact.IdVK;
             Assert.AreEqual(actual, _testContact.IdVK, "Сеттер неправильно заполнил idVk");
         }
 
-        [Test(Description = "Негативный тест сеттера IdVK")]
         [TestCase("",
             "Должно возникать исключение, если IdVK - пустая строка",
             TestName = "Присвоение пустой строки в качестве IdVK")]
@@ -138,6 +143,7 @@ namespace ContactsApp.UnitTests
             TestName = "Присвоение неправильной даты больше текущей")]
         public void TestIdVKSet_ArgumentException(string wrongIdVk, string message)
         {
+            SetUp();
             Assert.Throws<ArgumentException>(
                 () => { _testContact.IdVK = wrongIdVk; },
                 message);
@@ -146,6 +152,7 @@ namespace ContactsApp.UnitTests
         [Test(Description = "Позитивный тест геттера BirthDate")]
         public void TestDateGet_CorrectValue()
         {
+            SetUp();
             DateTime expected = new DateTime(2000, 8, 30);
 
             _testContact.BirthDate = expected;
@@ -156,6 +163,7 @@ namespace ContactsApp.UnitTests
         [Test(Description = "Позитивный тест сеттера BirthDate")]
         public void TestDateSet_CorrectValue()
         {
+            SetUp();
             _testContact.BirthDate = new DateTime(2000, 5, 20);
             var actual = _testContact.BirthDate;
             Assert.AreEqual(actual, _testContact.BirthDate, "Сеттер неправильно заполнил дату");
@@ -171,6 +179,7 @@ namespace ContactsApp.UnitTests
             TestName = "Присвоение неправильной даты больше текущей")]
         public void TestDateSet_ArgumentException(DateTime wrongDate, string message)
         {
+            SetUp();
             Assert.Throws<ArgumentException>(
                 () => { _testContact.BirthDate = wrongDate; },
                 message);
