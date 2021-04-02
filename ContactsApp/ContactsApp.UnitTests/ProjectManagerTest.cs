@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
+using Newtonsoft.Json;
 using NUnit.Framework;
-using ContactsApp;
+using NUnit.Framework.Constraints;
 
 namespace ContactsApp.UnitTests
 {
@@ -15,16 +14,23 @@ namespace ContactsApp.UnitTests
     [TestFixture]
     class ProjectManagerTest
     {
-        private const string CorrectProjectFile = @"TestData\correctproject.json";
-        private const string IncorrectProjectFile = @"TestData\incorrectproject.json";
-        private const string SavedFile = @"Output\SavedProjectFile.json";
-
-        private Project getCorrectProject()
+       /* private const string CorrectProjectFile = "\\ContactsApp.UnitTests.dll\\TestData\\correctproject.json";
+        private const string IncorrectProjectFile = "\\ContactsApp.UnitTests.dll\\TestData\\incorrectproject.json";
+        private const string SavedFile = "\\ContactsApp.UnitTests.dll\\TestData\\SavedProjectFile.json";*/
+        public string Location
+        {
+            get
+            {
+                var location = Assembly.GetExecutingAssembly().Location;
+                location = location.Replace("\\ContactsApp.UnitTests.dll", "\\TestData\\");
+                return location;
+            }
+        }
+        private Project GetCorrectProject()
         {
             var project = new Project();
-            
-            PhoneNumber expectedphone = new PhoneNumber();
-            expectedphone.Number = 79521817225;
+
+            PhoneNumber expectedphone = new PhoneNumber {Number = 79521817225};
             var contact = new Contact(
                 "Ani",
                 "Mnatsakanyan",
@@ -33,9 +39,8 @@ namespace ContactsApp.UnitTests
                 new DateTime(2000, 8, 30),
                 expectedphone);
             project.Contacts.Add(contact);
-            
-            expectedphone = new PhoneNumber();
-            expectedphone.Number = 79139999999;
+
+            expectedphone = new PhoneNumber {Number = 79139999999};
             contact = new Contact(
                 "Ivanov",
                 "Ivan",
@@ -51,10 +56,10 @@ namespace ContactsApp.UnitTests
         public void ProjectManager_LoadCorrectData_FileLoadCorrected()
         {
             //SetUp
-            var expectedProject = getCorrectProject();
+            var expectedProject = GetCorrectProject();
 
             //Act
-            var actualProject = ProjectManager.LoadFromFile(@"TestData\correctproject.json", "file");
+            var actualProject = ProjectManager.LoadFromFile(Location, "correctproject.json");
 
              //Assert
             Assert.AreEqual(expectedProject.Contacts.Count, actualProject.Contacts.Count);
@@ -71,29 +76,28 @@ namespace ContactsApp.UnitTests
             });
         }
 
-        [TestCase(Description = "", TestName = "")]
-        public void ProjectManager_LoadInorrectData_FileLoadInorrectly()
+        [TestCase(Description = "Негативный тест загрузки", TestName ="Загрузка некорректного файла")]
+        public void ProjectManager_LoadIncorrectData_FileLoadInorrectly()
         {
             // Assert
-            Assert.Multiple(() =>
-                {
-                    var actualProject = ProjectManager.LoadFromFile(@"TestData\incorrectproject.json", "file");
-                }
-            );
+            Assert.Throws<JsonReaderException>(code: () =>
+            { 
+                var actualProject = ProjectManager.LoadFromFile(path: Location, filename: "SavedProjectFile.json");
+            }, message: "Должно возникать исключение, если файл испорчен.");
         }
 
-        [TestCase(Description = "", TestName = "")]
+        [TestCase(Description = "", TestName = "Позитивный тест сохранения")]
         public void ProjectManager_SaveCorrectData_FileSaveCorrectly()
         {
             // Setup
-            var savingProject = getCorrectProject();
+            var savingProject = GetCorrectProject();
 
             // Act
-            ProjectManager.SaveToFile(savingProject, @"Output\SavedProjectFile.json", "savefile");
+            ProjectManager.SaveToFile(savingProject, Location, "SavedProjectFile.json");
 
             // Assert
-            var expected = File.ReadAllText(@"TestData\correctproject.json");
-            var actual = File.ReadAllText(@"Output\SavedProjectFile.json");
+            var expected = File.ReadAllText(Location + "correctproject.json");
+            var actual = File.ReadAllText(Location + "SavedProjectFile.json");
             Assert.AreEqual(expected, actual);
         }
     }
