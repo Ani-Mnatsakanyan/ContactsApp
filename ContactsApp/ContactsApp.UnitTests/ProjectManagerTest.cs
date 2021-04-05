@@ -92,7 +92,7 @@ namespace ContactsApp.UnitTests
             var expectedCount = 0;
 
             //Assert
-            Assert.AreEqual(expectedCount, actualProject.Contacts);
+            Assert.AreEqual(expectedCount, actualProject.Contacts.Count);
         }
 
         [TestCase(Description = "", TestName = "Позитивный тест сохранения")]
