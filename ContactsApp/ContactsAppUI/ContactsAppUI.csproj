@@ -108,4 +108,8 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>md $(SolutionDir)InstallScripts
+xcopy $(ProjectDir)$(OutDir)*.dll $(SolutionDir)InstallScripts\</PostBuildEvent>
+  </PropertyGroup>
 </Project>
