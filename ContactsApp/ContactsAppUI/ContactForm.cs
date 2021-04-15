@@ -62,7 +62,8 @@ namespace ContactsAppUI
         {
             if (SurnameTextBox.BackColor == Color.Red ||
                 NameTextBox.BackColor == Color.Red ||
-                PhoneTextBox.BackColor == Color.Red || 
+                PhoneTextBox.BackColor == Color.Red ||
+                IdVkTextBox.Text == String.Empty || 
                 BirthDayLabel.Text == "Error")
             {
                 _IsCorrectContact = true;

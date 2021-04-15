@@ -7,7 +7,7 @@ namespace ContactsApp
     /// Класс, хранящий информацию о контакте:
     /// имя, фамилия, почта, idvk
     /// </summary>
-    public class Contact : IEquatable<Contact>
+    public class Contact : IEquatable<Contact>, IComparable<Contact>
     {
         /// <summary>
         /// Фамилия
@@ -200,6 +200,17 @@ namespace ContactsApp
                 hashCode = (hashCode * 397) ^ (PhoneNumber != null ? PhoneNumber.GetHashCode() : 0);
                 return hashCode;
             }
+        }
+
+        /// <summary>
+        /// Метод для реализации интерфейса IComporable
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public int CompareTo(Contact other)
+        {
+            if (other == null) return 1;
+            return String.Compare(_surname, other._surname, StringComparison.Ordinal);
         }
     }
 }
