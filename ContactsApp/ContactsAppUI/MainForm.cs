@@ -31,12 +31,6 @@ namespace ContactsAppUI
             _project = ProjectManager.LoadFromFile(_defaultFilename, "contact.json");
             _project.SortList();
             CheckBirthdayToday();
-            //DateTime curDate = DateTime.Today;
-            //BirthDateLabel.Text = "У них сегодня день рождения: ";
-            //for (int i = 0; i < Project.FindBirthDay(_project, curDate).Contacts.Count; i++)
-            //{
-            //    BirthDateLabel.Text += Project.FindBirthDay(_project, curDate).Contacts[i].Surname + ", ";
-            //}
         }
 
         /// <summary>
@@ -239,7 +233,7 @@ namespace ContactsAppUI
                 BirthDateLabel.Text = "Сегодня день рождения: ";
                 for (int i = 0; i < Project.FindBirthDay(_project, today).Contacts.Count; i++)
                 {
-                    var birthdayLabelText = String.Join(", ", birthdayContact.Contacts[i].Surname);
+                    var birthdayLabelText = birthdayContact.Contacts[i].Surname + ", ";
                     BirthDateLabel.Text += birthdayLabelText;
                 }
             }
