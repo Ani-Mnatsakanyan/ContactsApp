@@ -32,6 +32,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>live_contacts_15412.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -107,5 +113,27 @@
       <Name>ContactsApp</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="live_contacts_15412.ico" />
+    <Content Include="Resources\BirthdayCake.ico" />
+    <Content Include="Resources\Add.png" />
+    <Content Include="Resources\Remove.png" />
+    <Content Include="Resources\Edit.png" />
+    <Content Include="Resources\Contacts.ico" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>del /q "$(SolutionDir)InstallScripts\Release"
+
+md "$(SolutionDir)InstallScripts\Release" 
+
+xcopy "$(ProjectDir)$(OutDir)*.dll" "$(SolutionDir)InstallScripts\Release" 
+
+xcopy "$(ProjectDir)$(OutDir)*.exe" "$(SolutionDir)InstallScripts\Release"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>
