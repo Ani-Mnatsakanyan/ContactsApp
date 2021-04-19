@@ -348,4 +348,4 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-/ContactsApp/InstallScripts/Installer
+/ContactsApp/InstallScripts/Installers
