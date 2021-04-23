@@ -1,6 +1,7 @@
 #define MyAppExeName "ContactsAppUI.exe"
 #define MyAppName "ContactsApp"
 #define MyAppVersion "1.0.0"
+
 [Setup]
 AppId={{F786CD3E-3A63-4282-B639-5DE65EAD7B71}
 AppName = {#MyAppName}

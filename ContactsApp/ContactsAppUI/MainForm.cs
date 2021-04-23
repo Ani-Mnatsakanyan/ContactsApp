@@ -75,6 +75,8 @@ namespace ContactsAppUI
             if (result != DialogResult.OK) return;
             _project.Contacts.RemoveAt(selectedIndex);
             ContactsListBox.Items.RemoveAt(selectedIndex);
+            UpdateListBox();
+            CheckBirthdayToday();
         }
         /// <summary>
         /// Метод добавления контакта 
@@ -96,6 +98,7 @@ namespace ContactsAppUI
             {
                 ContactsListBox.Items.Add(t.Surname);
             }
+            UpdateListBox();
             CheckBirthdayToday();
         }
 
@@ -115,11 +118,14 @@ namespace ContactsAppUI
                 editForm.ShowDialog();
                 if (editForm.Contact == null) return;
                 _project.Contacts[ContactsListBox.SelectedIndex] = editForm.Contact;
+                _project.SortList();
                 ContactsListBox.Items.Clear();
                 foreach (var t in _project.Contacts)
                 {
                     ContactsListBox.Items.Add(t.Surname);
                 }
+                UpdateListBox();
+                CheckBirthdayToday();
             }
         }
 
@@ -174,28 +180,7 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void ContactsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Contact contact;
-            if (ContactsListBox.SelectedIndex == -1 || ContactsListBox.Items == null)
-            {
-                NameTextBox.Text = null;
-                SurnameTextBox.Text = null;
-                DateBirthDay.Value = DateTime.Today;
-                EmailTextBox.Text = null;
-                IdVkTextBox.Text = null;
-                PhoneTextBox.Text = null;
-                return;
-            }
-
-            contact = FindTextBox.Text == String.Empty
-                ? contact = _project.Contacts[ContactsListBox.SelectedIndex]
-                : _findedContacts[ContactsListBox.SelectedIndex];
-
-            NameTextBox.Text = contact.Name;
-            SurnameTextBox.Text = contact.Surname;
-            DateBirthDay.Value = contact.BirthDate;
-            EmailTextBox.Text = contact.Email;
-            IdVkTextBox.Text = contact.IdVK;
-            PhoneTextBox.Text = contact.PhoneNumber.Number.ToString();
+            UpdateListBox();
         }
 
         /// <summary>
@@ -211,13 +196,8 @@ namespace ContactsAppUI
             {
                 _findedContacts.Add(t);
                 ContactsListBox.Items.Add(t.Surname);
-                NameTextBox.Text = t.Name;
-                SurnameTextBox.Text = t.Surname;
-                DateBirthDay.Value = t.BirthDate;
-                EmailTextBox.Text = t.Email;
-                IdVkTextBox.Text = t.IdVK;
-                PhoneTextBox.Text = t.PhoneNumber.Number.ToString();
             }
+            UpdateListBox();
         }
 
         /// <summary>
@@ -241,6 +221,36 @@ namespace ContactsAppUI
             {
                 BirthdayPanel.Visible = false;
             }
+        }
+        
+        /// <summary>
+        /// Метод отображающий информацию о контактах в полях формы
+        /// </summary>
+        private void UpdateListBox()
+        {
+            Contact contact;
+             if (ContactsListBox.SelectedIndex == -1 ||
+                ContactsListBox.Items == null)
+            {
+                NameTextBox.Text = null;
+                SurnameTextBox.Text = null;
+                DateBirthDay.Value = DateTime.Today;
+                EmailTextBox.Text = null;
+                IdVkTextBox.Text = null;
+                PhoneTextBox.Text = null;
+                return;
+            }
+
+            contact = FindTextBox.Text == String.Empty
+                ? contact = _project.Contacts[ContactsListBox.SelectedIndex]
+                : _findedContacts[ContactsListBox.SelectedIndex];
+
+            NameTextBox.Text = contact.Name;
+            SurnameTextBox.Text = contact.Surname;
+            DateBirthDay.Value = contact.BirthDate;
+            EmailTextBox.Text = contact.Email;
+            IdVkTextBox.Text = contact.IdVK;
+            PhoneTextBox.Text = contact.PhoneNumber.Number.ToString();
         }
     }
 }
