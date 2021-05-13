@@ -14,8 +14,9 @@ namespace ContactsAppUI
         {
             InitializeComponent();
         }
+
         /// <summary>
-        /// Метод для перехода пользователем по ссылке 
+        /// Метод для перехода пользователя по ссылке 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

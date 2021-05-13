@@ -184,8 +184,7 @@ namespace ContactsApp
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((Contact) obj);
+            return obj.GetType() == this.GetType() && Equals((Contact) obj);
         }
 
         public override int GetHashCode()
@@ -209,8 +208,7 @@ namespace ContactsApp
         /// <returns></returns>
         public int CompareTo(Contact other)
         {
-            if (other == null) return 1;
-            return String.Compare(_surname, other._surname, StringComparison.Ordinal);
+            return other == null ? 1 : String.Compare(_surname, other._surname, StringComparison.Ordinal);
         }
     }
 }

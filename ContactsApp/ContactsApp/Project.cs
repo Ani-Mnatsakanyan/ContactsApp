@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ContactsApp
 {
@@ -13,71 +14,40 @@ namespace ContactsApp
         /// </summary>
         public List<Contact> Contacts { get; set; } = new List<Contact>();
 
-        public bool Equals(Project other)
+        /// <summary>
+        /// Сортирует список контактов
+        /// </summary>
+        public void SortList()
         {
-            if (other == null)
-                return false;
-
-            return this.Contacts.Equals(other.Contacts);
-        }
-
-       /// <summary>
-       /// Метод, сортирующий список контактов
-       /// </summary>
-       public void SortList()
-       {
-           Contacts.Sort();
-       }
-      
-       /// <summary>
-       /// Метод, осуществляющий поиск контактов
-       /// </summary>
-       /// <param name="project"></param>
-       /// <param name="str"></param>
-       /// <returns></returns>
-        public static Project FindContact(Project project, string str)
-        {
-            Project findContact = new Project();
-            int count = 0;
-            for (int i = 0; i < project.Contacts.Count; i++)
-            {
-                str = str.ToLower();
-                if (str == String.Empty)
-                {
-                    return project;
-                }
-                if (project.Contacts[i].Surname.ToLower().Contains(str) ||
-                    project.Contacts[i].Name.ToLower().Contains(str)) 
-                    {
-                        findContact.Contacts.Add(new Contact());
-                        findContact.Contacts[count] = project.Contacts[i];
-                        count++;
-                    }
-            }
-            return findContact;
+            Contacts.Sort();
         }
 
         /// <summary>
-        /// Метод, осуществляющий поиск именинников 
+        /// Формирует список именинников
         /// </summary>
-        /// <param name="project"></param>
-        /// <param name="date"></param>
-        /// <returns></returns>
-        public static Project FindBirthDay(Project project, DateTime date)
+        /// <returns>Строка, состоящая из фамилий именинников через запятую</returns>
+        public string GetListBirthday()
         {
-            var findBirthArr = new Project();
-            var count = 0;
-            for (var i = 0; i < project.Contacts.Count; i++)
-            {
-                if (project.Contacts[i].BirthDate.Month == date.Month && 
-                    project.Contacts[i].BirthDate.Day == date.Day)
-                {
-                    findBirthArr.Contacts.Add(new Contact());
-                    findBirthArr.Contacts[count] = project.Contacts[i];
-                    count++;
-                }
-            }
-            return findBirthArr;
+            var listContacts = Contacts.Where(First => First.BirthDate.Day == DateTime.Now.Day &&
+                                                       First.BirthDate.Month == DateTime.Now.Month);
+            return string.Join(",", listContacts.Select(contact => contact.Surname).ToList());
+        }
+
+        /// <summary>
+        /// Осуществляет поиск контактов
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns>Контакты содержащие подстроку</returns>
+        public List<Contact> GetByNameOrSurname(string text)
+        {
+            text = text.ToLower();
+            return Contacts.FindAll(First => First.Surname.ToLower().Contains(text) ||
+                                             First.Name.ToLower().Contains(text));
+        }
+
+        public bool Equals(Project other)
+        {
+            return other != null && this.Contacts.Equals(other.Contacts);
         }
     }
 }

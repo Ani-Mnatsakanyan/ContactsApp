@@ -10,7 +10,7 @@ namespace ContactsApp
     public static class ProjectManager
     {
         /// <summary>
-        /// переменная хранящая путь к сохранению файла сериализации
+        /// Переменная хранящая путь к сохранению файла сериализации
         /// </summary>
         public static string DefaultFilename
         {
@@ -42,7 +42,6 @@ namespace ContactsApp
             using (var sw = new StreamWriter(path + filename))
             using (var writer = new JsonTextWriter(sw))
             {
-                //Вызываем сериализацию и передаем объект, который хотим сериализовать
                 serializer.Serialize(writer, project);
             }
         }

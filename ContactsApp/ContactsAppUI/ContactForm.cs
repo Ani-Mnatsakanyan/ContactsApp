@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using ContactsApp;
 
@@ -45,6 +44,7 @@ namespace ContactsAppUI
                 DateBirthDay.Value = _contact.BirthDate;
             }
         }
+
         /// <summary>
         /// Инициализирует все компоненты
         /// </summary>
@@ -60,19 +60,8 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void ButtonOK_Click(object sender, EventArgs e)
         {
-            if (SurnameTextBox.BackColor == Color.Red ||
-                NameTextBox.BackColor == Color.Red ||
-                PhoneTextBox.BackColor == Color.Red ||
-                IdVkTextBox.Text == String.Empty || 
-                BirthDayLabel.Text == "Error")
-            {
-                _IsCorrectContact = true;
-            }
-            else
-            {
-                _IsCorrectContact = false;
-            }
-
+            _IsCorrectContact = IsContactValidated();
+           
             if (NameTextBox.Text != null && SurnameTextBox.Text != null && _IsCorrectContact == false
                                          && PhoneTextBox.Text.Length == 11 && NameTextBox.Text != string.Empty
                                          && SurnameTextBox.Text != string.Empty)
@@ -87,25 +76,13 @@ namespace ContactsAppUI
                 _contact.PhoneNumber.Number = Convert.ToInt64(PhoneTextBox.Text);
                 _contact.IdVK = IdVkTextBox.Text;
                 _contact.BirthDate = DateBirthDay.Value;
-                var editForm = new ContactForm();
                 Close();
             }
             else
             {
-                DialogResult result = MessageBox.Show("Check if the values are correct and try again",
+                MessageBox.Show("Check if the values are correct and try again",
                     "" , MessageBoxButtons.OK);
             }
-        }
-
-        /// <summary>
-        /// Реакция нажатия на кнопку Cancel
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ButtonCancel_Click(object sender, EventArgs e)
-        {
-            _contact = null;
-            Close();
         }
 
         /// <summary>
@@ -115,8 +92,7 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void SurnameTextBox_Leave(object sender, EventArgs e)
         {
-            var check = false || SurnameTextBox.Text.Length >= 50;
-
+            var check = SurnameTextBox.Text.Length >= 50;
             for (var i = 0; i < SurnameTextBox.TextLength; i++)
             {
                 foreach (var t in _incorrectSymbols.Where(t => SurnameTextBox.Text[i] == t))
@@ -124,7 +100,7 @@ namespace ContactsAppUI
                     check = true;
                 }
             }
-            SurnameTextBox.BackColor = check == true ? Color.Red : Color.White;
+            SurnameTextBox.BackColor = check ? Color.Red : Color.White;
         }
 
         /// <summary>
@@ -134,18 +110,15 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void NameTextBox_Leave(object sender, EventArgs e)
         {
-            var check = false || NameTextBox.Text.Length >= 15;
+            var check = NameTextBox.Text.Length >= 15;
             for (var i = 0; i < NameTextBox.TextLength; i++)
             {
-                foreach (var t in _incorrectSymbols)
+                foreach (var t in _incorrectSymbols.Where(t => NameTextBox.Text[i] == t))
                 {
-                    if (NameTextBox.Text[i] == t)
-                    {
-                        check = true;
-                    }
+                    check = true;
                 }
             }
-            NameTextBox.BackColor = check == true ? Color.Red : Color.White;
+            NameTextBox.BackColor = check ? Color.Red : Color.White;
         }
 
         /// <summary>
@@ -156,20 +129,18 @@ namespace ContactsAppUI
         private void PhoneTextBox_Leave(object sender, EventArgs e)
         {
             PhoneTextBox.BackColor = PhoneTextBox.Text.Length != 11 ? Color.Red : Color.White;
-            if(PhoneTextBox.Text.StartsWith("7") == false)
-            { 
-               PhoneTextBox.BackColor = Color.Red; 
-            }
+            if (PhoneTextBox.Text.StartsWith("7")) return;
+            PhoneTextBox.BackColor = Color.Red;
         }
 
-       /// <summary>
-       /// Проверку ввода почты
-       /// </summary>
-       /// <param name="sender"></param>
-       /// <param name="e"></param>
+        /// <summary>
+        /// Проверку ввода почты
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EmailTextBox_TextChanged(object sender, EventArgs e)
         {
-            EmailTextBox.BackColor = !Regex.IsMatch(EmailTextBox.Text, "[@]") ? Color.Red : Color.White;
+            EmailTextBox.BackColor = EmailTextBox.Text.Contains("@") ? Color.White : Color.Red;
         }
 
         /// <summary>
@@ -189,6 +160,30 @@ namespace ContactsAppUI
                 BirthDayLabel.Text = "Error";
                 BirthDayLabel.ForeColor = Color.Red;
             }
+        }
+
+        /// <summary>
+        /// Реакция нажатия на кнопку Cancel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonCancel_Click(object sender, EventArgs e)
+        {
+            _contact = null;
+            Close();
+        }
+        
+        /// <summary>
+        /// Проверяет наличие некорректных данных для ввода
+        /// </summary>
+        /// <returns>true - если есть некорректные данные, иначе false</returns>
+        private bool IsContactValidated()
+        {
+            return SurnameTextBox.BackColor == Color.Red ||
+                   NameTextBox.BackColor == Color.Red ||
+                   PhoneTextBox.BackColor == Color.Red ||
+                   IdVkTextBox.Text == String.Empty ||
+                   BirthDayLabel.Text == "Error";
         }
     }
 }
