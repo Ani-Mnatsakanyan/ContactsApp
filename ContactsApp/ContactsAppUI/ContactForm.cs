@@ -12,6 +12,16 @@ namespace ContactsAppUI
     public partial class ContactForm : Form 
     {
         /// <summary>
+        /// Для некорректного значения TextBox
+        /// </summary>
+        public static readonly Color IncorrectValue = Color.DarkSalmon;
+
+        /// <summary>
+        /// Для корректного значения TextBox
+        /// </summary>
+        public static readonly Color CorrectValue = Color.White;
+
+        /// <summary>
         /// Поле, хранящее контакт 
         /// </summary>
         private Contact _contact;
@@ -19,7 +29,7 @@ namespace ContactsAppUI
         /// <summary>
         /// Переменная для проверки корректного ввода всех TextBox
         /// </summary>
-        bool _IsCorrectContact;
+        private bool _isCorrectContact;
 
         /// <summary>
         /// Переменная, хранящая недопустимые для ввода символы
@@ -35,7 +45,10 @@ namespace ContactsAppUI
             set
             {
                 _contact = value;
-                if (_contact == null) return;
+                if (_contact == null)
+                {
+                    return;
+                }
                 NameTextBox.Text = _contact.Name;
                 SurnameTextBox.Text = _contact.Surname;
                 EmailTextBox.Text = _contact.Email;
@@ -54,17 +67,38 @@ namespace ContactsAppUI
         }
 
         /// <summary>
+        /// Проверяет наличие некорректных данных для ввода
+        /// </summary>
+        /// <returns>true - если есть некорректные данные, иначе false</returns>
+        private bool IsContactValidated()
+        {
+            return SurnameTextBox.BackColor == IncorrectValue ||
+                   NameTextBox.BackColor == IncorrectValue ||
+                   PhoneTextBox.BackColor == IncorrectValue ||
+                   IdVkTextBox.Text == String.Empty ||
+                   BirthDayLabel.Text == "Error";
+        }
+
+        /// <summary>
+        /// Проверяет все TextBox на наличие символов и их корректность
+        /// </summary>
+        /// <returns>true - если проверка пройдена, иначе false</returns>
+        private bool CheckTextBox()
+        {
+            return NameTextBox.Text != null && SurnameTextBox.Text != null && _isCorrectContact == false
+                   && PhoneTextBox.Text.Length == 11 && NameTextBox.Text != string.Empty
+                   && SurnameTextBox.Text != string.Empty;
+        }
+
+        /// <summary>
         /// Реакция нажатия на кнопку ОК после заполнения всех TextBox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ButtonOK_Click(object sender, EventArgs e)
         {
-            _IsCorrectContact = IsContactValidated();
-           
-            if (NameTextBox.Text != null && SurnameTextBox.Text != null && _IsCorrectContact == false
-                                         && PhoneTextBox.Text.Length == 11 && NameTextBox.Text != string.Empty
-                                         && SurnameTextBox.Text != string.Empty)
+            _isCorrectContact = IsContactValidated();
+            if (CheckTextBox())
             {
                 _contact = new Contact
                 {
@@ -86,6 +120,17 @@ namespace ContactsAppUI
         }
 
         /// <summary>
+        /// Реакция нажатия на кнопку Cancel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonCancel_Click(object sender, EventArgs e)
+        {
+            _contact = null;
+            Close();
+        }
+
+        /// <summary>
         /// Проверка ввода фамилии
         /// </summary>
         /// <param name="sender"></param>
@@ -100,7 +145,7 @@ namespace ContactsAppUI
                     check = true;
                 }
             }
-            SurnameTextBox.BackColor = check ? Color.Red : Color.White;
+            SurnameTextBox.BackColor = check ? IncorrectValue : CorrectValue;
         }
 
         /// <summary>
@@ -118,7 +163,7 @@ namespace ContactsAppUI
                     check = true;
                 }
             }
-            NameTextBox.BackColor = check ? Color.Red : Color.White;
+            NameTextBox.BackColor = check ? IncorrectValue : CorrectValue;
         }
 
         /// <summary>
@@ -128,9 +173,12 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void PhoneTextBox_Leave(object sender, EventArgs e)
         {
-            PhoneTextBox.BackColor = PhoneTextBox.Text.Length != 11 ? Color.Red : Color.White;
-            if (PhoneTextBox.Text.StartsWith("7")) return;
-            PhoneTextBox.BackColor = Color.Red;
+            PhoneTextBox.BackColor = PhoneTextBox.Text.Length != 11 ? IncorrectValue : CorrectValue;
+            if (PhoneTextBox.Text.StartsWith("7"))
+            {
+                return;
+            }
+            PhoneTextBox.BackColor = IncorrectValue;
         }
 
         /// <summary>
@@ -140,7 +188,7 @@ namespace ContactsAppUI
         /// <param name="e"></param>
         private void EmailTextBox_TextChanged(object sender, EventArgs e)
         {
-            EmailTextBox.BackColor = EmailTextBox.Text.Contains("@") ? Color.White : Color.Red;
+            EmailTextBox.BackColor = EmailTextBox.Text.Contains("@") ? CorrectValue : IncorrectValue;
         }
 
         /// <summary>
@@ -158,32 +206,9 @@ namespace ContactsAppUI
             else
             {
                 BirthDayLabel.Text = "Error";
-                BirthDayLabel.ForeColor = Color.Red;
+                BirthDayLabel.ForeColor = IncorrectValue;
             }
         }
 
-        /// <summary>
-        /// Реакция нажатия на кнопку Cancel
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ButtonCancel_Click(object sender, EventArgs e)
-        {
-            _contact = null;
-            Close();
-        }
-        
-        /// <summary>
-        /// Проверяет наличие некорректных данных для ввода
-        /// </summary>
-        /// <returns>true - если есть некорректные данные, иначе false</returns>
-        private bool IsContactValidated()
-        {
-            return SurnameTextBox.BackColor == Color.Red ||
-                   NameTextBox.BackColor == Color.Red ||
-                   PhoneTextBox.BackColor == Color.Red ||
-                   IdVkTextBox.Text == String.Empty ||
-                   BirthDayLabel.Text == "Error";
-        }
     }
 }
